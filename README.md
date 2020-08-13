@@ -1,5 +1,3 @@
-# ProffyTeacherPlatform
-
 <h1 align="center">
 Proffy Teacher and Students Platform
 </h1>
@@ -32,23 +30,23 @@ This project was developed with the following technologies:
 
 ## Usage
 
- # API
+ ### API
   #$ cd server
-  #$ yarn # or npm install
-  #$ yarn knex:migrate # or npm run knex:migrate
+  <br />#$ yarn # or npm install
+  <br />#$ yarn knex:migrate # or npm run knex:migrate
 
- # Start the API
+ ### Start the API
   #$ yarn start # or npm start
 
- # Web App
+ ### Web App
   #$ cd web
-  #$ yarn # or npm install
-  #$ yarn start # or npm start
+  <br />#$ yarn # or npm install
+  <br />#$ yarn start # or npm start
 
- # Mobile App
-  #$ cd mobile
-  #$ yarn # or npm install
-  #$ yarn start # or npm start
+ ### Mobile App
+  $ cd mobile
+  <br />$ yarn # or npm install
+  <br />$ yarn start # or npm start
 
 
 ## Participants
