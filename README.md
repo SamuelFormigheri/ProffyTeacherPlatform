@@ -10,11 +10,11 @@ Proffy Teacher and Students Platform
 
 ## 💻 Project
 
-<img src="/images/Login">
+<img src="https://user-images.githubusercontent.com/62508848/90081265-43b76200-dce3-11ea-8716-836b45cba8d1.png">
 
-<img src="/images/Landing">
+<img src="https://user-images.githubusercontent.com/62508848/90081284-503bba80-dce3-11ea-89c5-e800779d9131.png">
 
-<img src="/images/Profile">
+<img src="https://user-images.githubusercontent.com/62508848/90081294-5a5db900-dce3-11ea-8c35-8761d528a77b.png">
 
 ## 🚀 Technologies
 
@@ -32,23 +32,23 @@ This project was developed with the following technologies:
 
 ## Usage
 
- API
-  $ cd server
-  $ yarn # or npm install
-  $ yarn knex:migrate # or npm run knex:migrate
+ # API
+  #$ cd server
+  #$ yarn # or npm install
+  #$ yarn knex:migrate # or npm run knex:migrate
 
-  Start the API
-  $ yarn start # or npm start
+ # Start the API
+  #$ yarn start # or npm start
 
-  Web App
-  $ cd web
-  $ yarn # or npm install
-  $ yarn start # or npm start
+ # Web App
+  #$ cd web
+  #$ yarn # or npm install
+  #$ yarn start # or npm start
 
-  Mobile App
-  $ cd mobile
-  $ yarn # or npm install
-  $ yarn start # or npm start
+ # Mobile App
+  #$ cd mobile
+  #$ yarn # or npm install
+  #$ yarn start # or npm start
 
 
 ## Participants
