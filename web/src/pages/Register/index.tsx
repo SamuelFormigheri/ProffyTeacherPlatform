@@ -10,7 +10,6 @@ import Input from '../../components/Input';
 //#region Assets
 import BackIcon from '../../assets/images/icons/back.svg';
 //#endregion
-
 import api from '../../services/api';
 import './styles.css';
 

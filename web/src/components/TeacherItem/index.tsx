@@ -1,7 +1,7 @@
 import React from 'react';
 
 //#region Pages
-
+import TeacherWeekSchedule from './TeacherWeekSchedule';
 //#endregion
 
 //#region Assets
@@ -43,6 +43,7 @@ const TeacherItem: React.FC<ITeacherProps> = ({teacher}) => {
             </div>
         </header>
         <p>{teacher.bio}</p>
+        <TeacherWeekSchedule id={teacher.id}/> 
         <footer>
             <p>
             Price/Hour
@@ -51,8 +52,7 @@ const TeacherItem: React.FC<ITeacherProps> = ({teacher}) => {
             <a onClick={handleCreateConnection} href={`https://wa.me/${teacher.whatsapp}`} target="_blank" rel="noopener noreferrer">
                 <img src={WhatsAppIcon} alt="Whats App Icon"/>
                 Contact me
-            </a>
-        
+            </a>        
         </footer>
     </article>
   );

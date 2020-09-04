@@ -76,9 +76,12 @@ const TeacherForm: React.FC = () => {
         fk_login_id: userCredentials[0].id
       }).then((resp)=> {
         const {data} = resp;
-        setAvatar(data[0].avatar);
+        if (data[0].avatar != null)
+          setAvatar(data[0].avatar);
+        if (data[0].whatsapp != null)
         setWhatsapp(data[0].whatsapp);
-        setBio(data[0].bio);
+        if (data[0].bio != null)
+          setBio(data[0].bio);
       });
     }
   }
@@ -95,8 +98,8 @@ const TeacherForm: React.FC = () => {
           <fieldset>
             <legend>Your Personal Data</legend>
             <Input name="name" label="Name" placeholder="Type your Full Name..." value={name} disabled/>
-            <Input name="avatar" label="Avatar" placeholder="Type the url of your Avatar Image..." value={avatar} disabled/>
-            <Input name="whatsapp" label="WhatsApp" placeholder="Type the number of your phone to further contact..." value={whatsapp} disabled/>
+            <Input name="avatar" label="Avatar" placeholder="Type the url of your Avatar Image..." value={avatar} onChange={(e) => setAvatar(e.target.value)}/>
+            <Input name="whatsapp" label="WhatsApp" placeholder="Type the number of your phone to further contact..." value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)}/>
             <Textarea name="bio" label="Biography" value={bio} onChange={(e) => setBio(e.target.value)}/>
           </fieldset>
 

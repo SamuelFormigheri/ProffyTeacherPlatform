@@ -10,7 +10,7 @@ import Textarea from '../../components/Textarea';
 //#region Assets
 import warningIcon from '../../assets/images/icons/warning.svg';
 //#endregion
-
+import {useAuth} from '../../hooks/AuthContext';
 import api from '../../services/api';
 import './styles.css';
 
@@ -18,7 +18,7 @@ const ProfileForm: React.FC = () => {
 
   //#region Functions
   const history = useHistory();
-
+  const {user} = useAuth();
   const [fk_login_id, setFk_login_id] = useState('');
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
@@ -52,24 +52,23 @@ const ProfileForm: React.FC = () => {
   }
 
   useEffect( () => {
-    var retrievedObject = localStorage.getItem('proffy-token');
-    if(retrievedObject != null){
-      var userCredentials = JSON.parse(retrievedObject);
-      setName(userCredentials[0].first_name + ' ' + userCredentials[0].last_name);
-      setFk_login_id(userCredentials[0].id);
+      setName(user.first_name + ' ' + user.last_name);
+      setFk_login_id(user.id.toString());
 
       api.post('profile',{
-        fk_login_id: userCredentials[0].id
+        fk_login_id: user.id
       }).then((resp)=> {
         const {data} = resp;
-        setAvatar(data[0].avatar);
-        setWhatsapp(data[0].whatsapp);
-        setBio(data[0].bio);
-        setAvatarBackgroundImage(data[0].avatar);
-      });
-
-    }   
-  },[]);
+        if(data[0].avatar != null){
+          setAvatar(data[0].avatar);
+          setAvatarBackgroundImage(data[0].avatar);
+        }
+        if(data[0].whatsapp != null)
+          setWhatsapp(data[0].whatsapp);
+        if(data[0].bio != null)
+          setBio(data[0].bio);
+      });      
+  },[user]);
   //#endregion
 
   return (

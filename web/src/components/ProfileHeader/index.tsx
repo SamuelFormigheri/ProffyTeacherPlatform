@@ -1,46 +1,39 @@
 import React,{ useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
-
-//#region Pages
-
-//#endregion
+import { Link } from 'react-router-dom';
 
 //#region Assets
 import ExitIcon from '../../assets/images/icons/exit.svg';
 import UserIcon from '../../assets/images/icons/user.svg';
 //#endregion
 
+import {useAuth} from '../../hooks/AuthContext';
 import api from '../../services/api';
 import './styles.css';
 
 const ProfileHeader: React.FC = () => {
     
 //#region Functions
-const history = useHistory();
 const [userImg, setUserImg] = useState('');
 const [userFirstName, setUserFirstName] = useState('');
 const [userLastName, setUserLastName] = useState('');
 
+const {user, signOut} = useAuth();
+
 function handleLogout(){
-  localStorage.removeItem('proffy-token');
-  history.push('/login');
+  signOut();
 }
 
 useEffect(() => {
-  var retrievedObject = localStorage.getItem('proffy-token');
-  if(retrievedObject != null){
-    var userCredentials = JSON.parse(retrievedObject);
-    setUserFirstName(userCredentials[0].first_name);
-    setUserLastName(userCredentials[0].last_name);
+  setUserFirstName(user.first_name);
+  setUserLastName(user.last_name);
 
-    api.post('profile',{
-      fk_login_id: userCredentials[0].id
-    }).then((resp)=> {
-      const {data} = resp;
-      setUserImg(data[0].avatar);
-    });
-  }
-},[]);
+  api.post('profile',{
+    fk_login_id: user.id
+  }).then((resp)=> {
+    const {data} = resp;
+    setUserImg(data[0].avatar);
+  }); 
+},[user]);
 //#endregion
 
   return (

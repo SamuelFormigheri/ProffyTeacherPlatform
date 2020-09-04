@@ -2,7 +2,8 @@ import React from 'react';
 import './assets/styles/global.css';
 
 //#region Pages
-import Routes from './routes';
+import GlobalProvider from './hooks/Global';
+import Routes from './routes/routes';
 //#endregion
 
 import ThemeSwitcher from '../src/components/ThemeSwitcher';
@@ -10,8 +11,10 @@ import ThemeSwitcher from '../src/components/ThemeSwitcher';
 function App() {
   return (  
     <> 
-      <ThemeSwitcher />
-      <Routes />
+      <GlobalProvider>
+        <ThemeSwitcher />
+        <Routes />
+      </GlobalProvider>
     </>
   );
 }
