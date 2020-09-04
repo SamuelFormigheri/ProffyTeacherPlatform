@@ -15,8 +15,8 @@ export default class LoginsController {
 
         try{
             if(await bcrypt.compare(password, loginUser[0].password)){
-                loginUser[0].password = "";
-                return res.json(loginUser);
+                delete loginUser[0].password;
+                return res.json(loginUser[0]);
             }else{
                 return res.status(400).json({
                     error: "Incorrect Password"

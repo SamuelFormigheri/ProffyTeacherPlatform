@@ -9,6 +9,15 @@ interface IScheduleItem {
 }
 
 export default class ClassesController{
+    async GetClassesSchedule(req:Request, res:Response){
+        const filters = req.query;
+
+        const id = filters.id;
+
+        const hours = await db('db_classes_schedule').where('fk_class_id', '=', [id]);
+
+        return res.json(hours);
+    }
     async ListClasses(req:Request, res:Response){
         const filters = req.query;
 
@@ -63,7 +72,7 @@ export default class ClassesController{
             });
         
             const fk_user_id = insertedUsersId[0];
-        
+
             const insertedClassesId = await trx('db_classes').insert({
                 subject: subject,
                 cost: cost,

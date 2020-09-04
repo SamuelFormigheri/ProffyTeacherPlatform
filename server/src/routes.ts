@@ -44,6 +44,8 @@ routes.post("/connections", connectionsController.CreateConnection);
 routes.get("/classes", classesController.ListClasses);
 //Criar Aula
 routes.post("/classes", classesController.CreateClass);
+//Detalhes da aula
+routes.get("/classes-details", classesController.GetClassesSchedule);
 
 //#endregion
 
