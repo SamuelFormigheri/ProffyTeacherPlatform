@@ -14,7 +14,8 @@ import PurpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
 //#endregion
 
 import api from '../../services/api';
-import './styles.css';
+
+import {Container, ContainerContent, HeroImg, LogoContainer, ButtonsContainer, TotalConnections} from './styles';
 
 
 const Landing: React.FC = () => {
@@ -31,17 +32,17 @@ const Landing: React.FC = () => {
   //#endregion
 
   return (
-    <div id="page-landing">
-        <div id="page-landing-content" className="container">
+    <Container>
+        <ContainerContent>
             <ProfileHeader />
-            <div className="logo-container">
+            <LogoContainer>
                 <img src={LogoImg} alt="Logo"/>
                 <h2>Your Platform of Online Studies.</h2>
-            </div>
+            </LogoContainer>
 
-            <img src={LandingImg} alt="Landing" className="hero-image"/>
+            <HeroImg src={LandingImg} alt="Landing" className="hero-image"/>
 
-            <div className="buttons-container">
+            <ButtonsContainer>
                 <Link to="/study" className="study">
                     <img src={StudyIcon} alt="Study Icon"></img>
                     Study
@@ -50,13 +51,13 @@ const Landing: React.FC = () => {
                     <img src={GiveClassesIcon} alt="Classes Icon"></img>
                     Give Classes
                 </Link>
-            </div>
+            </ButtonsContainer>
 
-            <span className="total-connections">
+            <TotalConnections>
                 Total of {totalConnections} connections already made <img src={PurpleHeartIcon} alt="Purple Heart Icon"></img>
-            </span>
-        </div>
-    </div>
+            </TotalConnections>
+        </ContainerContent>
+    </Container>
     );
 }
 

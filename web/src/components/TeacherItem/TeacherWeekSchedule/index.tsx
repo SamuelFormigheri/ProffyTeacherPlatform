@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import './styles.css';
+import{Container, Day} from './styles';
+
 import api from '../../../services/api';
 
 interface IClasses{
@@ -80,38 +81,38 @@ const TeacherWeekSchedule: React.FC<IClasses> = ({id}) => {
     //#endregion
 
   return (
-    <div className="teacher-week-schedule">
-        <div className="day"style={monday ? {opacity:"1"}: {opacity:"0.2"}}>
+    <Container>
+        <Day style={monday ? {opacity:"1"}: {opacity:"0.2"}}>
             <label>Day</label>
             <span>Monday</span>
             <label>Hour</label>
             <span>{monday}</span>               
-        </div>
-        <div className="day"style={tuesday ? {opacity:"1"}: {opacity:"0.2"}}>
+        </Day>
+        <Day className="day"style={tuesday ? {opacity:"1"}: {opacity:"0.2"}}>
             <label>Day</label>
             <span>Tuesday</span>
             <label>Hour</label>
             <span>{tuesday}</span> 
-        </div>
-        <div className="day" style={wednesday ? {opacity:"1"}: {opacity:"0.2"}}>
+        </Day>
+        <Day className="day" style={wednesday ? {opacity:"1"}: {opacity:"0.2"}}>
             <label>Day</label>
             <span >Wednesday</span> 
             <label>Hour</label>
             <span>{wednesday}</span>   
-        </div>
-        <div className="day"style={thursday ? {opacity:"1"}: {opacity:"0.2"}}>
+        </Day>
+        <Day className="day"style={thursday ? {opacity:"1"}: {opacity:"0.2"}}>
             <label>Day</label>
             <span >Thursday</span>
             <label>Hour</label>
             <span>{thursday}</span> 
-        </div>
-        <div className="day"style={friday ? {opacity:"1"}: {opacity:"0.2"}}>
+        </Day>
+        <Day className="day"style={friday ? {opacity:"1"}: {opacity:"0.2"}}>
             <label>Day</label>
             <span>Friday</span>
             <label>Hour</label>
             <span>{friday}</span> 
-        </div>
-    </div>
+        </Day>
+    </Container>
   );
 }
 

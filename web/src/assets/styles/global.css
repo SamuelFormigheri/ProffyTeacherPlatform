@@ -41,6 +41,12 @@
     --color-button-text: #FFFFFF;
     --color-box-base: #666666;
     --color-box-footer: #555555;
+    --color-red: #C53030;
+
+    --toast-color-background:rgba(0,0,0,0.75); 
+    --toast-success-color:#04D361;
+    --toast-danger-color: #C53030;
+    --toast-info-color: #3172b7;
 }
 
 *{
@@ -50,7 +56,7 @@
 }
 
 html, body, #root{
-    height: 100vh;
+    height: auto;
 }
 
 body{

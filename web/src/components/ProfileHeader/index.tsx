@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import ExitIcon from '../../assets/images/icons/exit.svg';
 import UserIcon from '../../assets/images/icons/user.svg';
 //#endregion
-
 import {useAuth} from '../../hooks/AuthContext';
 import api from '../../services/api';
-import './styles.css';
+
+import {Container, ProfileDetails, ExitButton} from './styles';
 
 const ProfileHeader: React.FC = () => {
     
@@ -37,17 +37,17 @@ useEffect(() => {
 //#endregion
 
   return (
-    <header id="header-profile">
+    <Container>
       <Link to="/profile-details">
-        <div id="header-profile-details">
+        <ProfileDetails>
           <img src={userImg ? userImg : UserIcon} alt="Profile"></img>
           <span>{userFirstName} {userLastName}</span>
-        </div>
+        </ProfileDetails>
       </Link>
-      <div id="exit-button" onClick={handleLogout}>
+      <ExitButton onClick={handleLogout}>
         <img src={ExitIcon} alt="Exit Icon"></img>
-      </div>
-    </header>
+      </ExitButton>
+    </Container>
   );
 }
 

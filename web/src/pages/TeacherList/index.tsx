@@ -1,18 +1,18 @@
 import React,{ useState, FormEvent } from 'react';
 
+//#region Assets
+import SearchIcon from '../../assets/images/icons/search.svg';
+//#endregion
 //#region Pages
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, {ITeacher} from '../../components/TeacherItem';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 //#endregion
-
-//#region Assets
-import SearchIcon from '../../assets/images/icons/search.svg';
-//#endregion
-
+import {useToast} from '../../hooks/ToastContext';
 import api from '../../services/api';
-import './styles.css';
+
+import {Container, Main, Form} from './styles';
 
 const TeacherList: React.FC = () => {
 
@@ -23,6 +23,7 @@ const TeacherList: React.FC = () => {
 
   const [teachers, setTeachers] = useState([]);
 
+  const {addToast} = useToast();
   async function handleSearchTeachers(e: FormEvent){
     e.preventDefault();
 
@@ -34,13 +35,19 @@ const TeacherList: React.FC = () => {
         }
     });
     setTeachers(response.data);
+    addToast({
+        id: "Info Message",
+        title: "Info",
+        description: "Check all the classes...",
+        type: "info"
+      });
   }
   //#endregion
 
   return (
-      <div id="page-teacher-list" className="container">
+      <Container>
           <PageHeader title="These are the available teachers.">
-                <form id="search-teachers" onSubmit={handleSearchTeachers}>
+                <Form id="search-teachers" onSubmit={handleSearchTeachers}>
                     <Select name="subject" label="Subject" value={subject}
                         onChange={e => { setSubject(e.target.value) }} 
                         options={[
@@ -68,14 +75,14 @@ const TeacherList: React.FC = () => {
                     <Input name="time" label="Time" type="time" value={time}
                         onChange={e => { setTime(e.target.value) }} />
                     <button type="submit"><img src={SearchIcon} alt="Search Icon"/></button>
-                </form>
+                </Form>
           </PageHeader>
-          <main>
+          <Main>
               {teachers.map((teacher: ITeacher)=> {
                   return <TeacherItem key={teacher.id}  teacher={teacher}/>
               })}      
-          </main>
-      </div>
+          </Main>
+      </Container>
   );
 }
 

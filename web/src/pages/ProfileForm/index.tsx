@@ -12,11 +12,15 @@ import warningIcon from '../../assets/images/icons/warning.svg';
 //#endregion
 import {useAuth} from '../../hooks/AuthContext';
 import api from '../../services/api';
-import './styles.css';
+
+import {useToast} from '../../hooks/ToastContext';
+
+import { Container, Main, Fieldset, Footer} from './styles';
+
 
 const ProfileForm: React.FC = () => {
 
-  //#region Functions
+  //#region FUNCTIONS
   const history = useHistory();
   const {user} = useAuth();
   const [fk_login_id, setFk_login_id] = useState('');
@@ -25,6 +29,7 @@ const ProfileForm: React.FC = () => {
   const [whatsapp, setWhatsapp] = useState('');
   const [bio, setBio] = useState('');
   const [avatarBackgroundImage, setAvatarBackgroundImage] = useState('');
+  const {addToast} = useToast();
 
   function validateFields(){
     if(avatar.length > 10 && bio.length > 10 && whatsapp.length > 10){
@@ -44,9 +49,20 @@ const ProfileForm: React.FC = () => {
         whatsapp: whatsapp,
         fk_login_id: fk_login_id
       }).then(()=>{
+        addToast({
+          id: "Success Message",
+          title: "Success.",
+          description: "Updated infos.",
+          type: "success"
+        });
         history.push('/');
       }).catch(()=>{
-        alert('Erro no cadastro');
+        addToast({
+          id: "Error Message",
+          title: "Error.",
+          description: "Error updating profile infos. Check all the fields and try again.",
+          type: "danger"
+        });
       })
     }
   }
@@ -72,22 +88,22 @@ const ProfileForm: React.FC = () => {
   //#endregion
 
   return (
-    <div id="page-profile-form" className="container">
+    <Container>
         <PageHeader 
           title={name}
           description="Profile details"
           image={avatarBackgroundImage}/>
-        <main>
+        <Main>
           <form onSubmit={handleEditProfile}>
-          <fieldset>
+          <Fieldset>
             <legend>Your Personal Data</legend>
             <Input name="name" label="Name" placeholder="Type your Full Name..." value={name} disabled/>
             <Input name="avatar" label="Avatar" placeholder="Type the url of your Avatar Image..." value={avatar} onChange={(e) => setAvatar(e.target.value)}/>
             <Input name="whatsapp" label="WhatsApp" placeholder="Type the number of your phone to further contact..." value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)}/>
             <Textarea name="bio" label="Biography" value={bio} onChange={(e) => setBio(e.target.value)}/>
-          </fieldset>
+          </Fieldset>
 
-          <footer>
+          <Footer>
             <p>
               <img src={warningIcon} alt="Warning Icon"/>
               Important! <br />
@@ -96,10 +112,10 @@ const ProfileForm: React.FC = () => {
             <button type="submit">
               Save Changes
             </button>
-          </footer>
+          </Footer>
           </form>
-        </main>
-    </div>
+        </Main>
+    </Container>
   );
 }
 

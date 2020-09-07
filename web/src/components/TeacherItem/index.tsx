@@ -9,8 +9,8 @@ import WhatsAppIcon from '../../assets/images/icons/whatsapp.svg';
 //#endregion
 
 import api from '../../services/api';
-
-import './styles.css';
+import {Container, Header, Footer} from './styles';
+//import './styles.css';
 export interface ITeacher {
     avatar: string;
     bio: string;
@@ -34,17 +34,17 @@ const TeacherItem: React.FC<ITeacherProps> = ({teacher}) => {
   }
   //#endregion
   return (
-    <article className="teacher-item">
-        <header>
+    <Container>
+        <Header>
             <img src={teacher.avatar} alt={teacher.name}></img>
             <div>
                 <strong>{teacher.name}</strong>
                 <span>{teacher.subject}</span>
             </div>
-        </header>
+        </Header>
         <p>{teacher.bio}</p>
         <TeacherWeekSchedule id={teacher.id}/> 
-        <footer>
+        <Footer>
             <p>
             Price/Hour
             <strong>U$ {teacher.cost}</strong>
@@ -53,8 +53,8 @@ const TeacherItem: React.FC<ITeacherProps> = ({teacher}) => {
                 <img src={WhatsAppIcon} alt="Whats App Icon"/>
                 Contact me
             </a>        
-        </footer>
-    </article>
+        </Footer>
+    </Container>
   );
 }
 

@@ -22,7 +22,7 @@ interface ICredentials {
 
 interface IAuthContext {
     user: IUser;
-    signIn(credentials:ICredentials): Promise<void>;
+    signIn(credentials:ICredentials): Promise<void | Error>;
     signOut(): void;
 }
 
@@ -33,6 +33,7 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider: React.FC = ({children}) => {
 
+//#region FUNCTIONS  
     const getCredentialsFromLocalStorage = useCallback(()=>{
         const token = localStorage.getItem('@Proffy:token');
         const user = localStorage.getItem('@Proffy:user');
@@ -46,9 +47,6 @@ export const AuthProvider: React.FC = ({children}) => {
     
     
     const signIn = useCallback(async({email, password, rememberMe = true})=>{
-        if(password.length < 8 && email.length < 8){
-          return;
-        }
         const user = await api.post('login',{ email: email, password: password });
         //Alterar para gerar a token via backend
         const token = "bduioqwbeiobryie@!#@!$#wourhowahriubdbiwaegriwaebfuibaew@!#@!$#fbygYSGUSAUS@!#@!$#YGVVFVEWVgsughasui@#";
@@ -61,7 +59,7 @@ export const AuthProvider: React.FC = ({children}) => {
             sessionStorage.setItem('@Proffy:user', JSON.stringify(user.data));
         }
         setCredentialsData({token: token, user: user.data});
-          
+
     },[]);
     
     const signOut = useCallback(()=>{
@@ -72,7 +70,8 @@ export const AuthProvider: React.FC = ({children}) => {
     
         setCredentialsData({} as ICredentialsData);
     },[]);
-    
+//#endregion
+
 return (<AuthContext.Provider value={{user: credentialsData.user, signIn, signOut}}>{children}</AuthContext.Provider>);
 }
 

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import SuccessIcon from '../../assets/images/icons/success-check-icon.svg';
 //#endregion
 
-import './styles.css';
+import {Container, LogoContainer} from './styles';
 
 interface ISuccessMessages{
   title: string;
@@ -20,14 +20,14 @@ interface ISuccessMessages{
 
 const SuccessPage: React.FC<ISuccessMessages> = ({title, message, button, redirect}) => {
   return (
-      <div id="success-page-cover">
-         <div className="logo-container">
+      <Container>
+         <LogoContainer>
                 <img src={SuccessIcon} alt="Logo"/>
                 <h2>{title}</h2>
                 <h5>{message}</h5>
                 <Link to={redirect}><button>{button}</button></Link>
-         </div>
-      </div>
+         </LogoContainer>
+      </Container>
   );
 }
 

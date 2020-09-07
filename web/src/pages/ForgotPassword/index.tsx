@@ -9,12 +9,12 @@ import Input from '../../components/Input';
 //#region Assets
 import BackIcon from '../../assets/images/icons/back.svg';
 //#endregion
+import {Container, Form} from './styles';
 
-import './styles.css';
 const ForgotPassword: React.FC = () => {
   return (
-      <div id="forgot-password">
-          <form id="forgot-password-form">
+      <Container>
+          <Form>
             <fieldset>
               <legend>So you forgot your password?</legend>
               <span>Don't worry, we will fix it.</span>
@@ -22,9 +22,9 @@ const ForgotPassword: React.FC = () => {
               <button type="submit">Send</button>
               <Link to="/login"> <img src={BackIcon} alt="Back Icon"/></Link>
             </fieldset>
-          </form>
+          </Form>
         <LoginPageCover />
-      </div>
+      </Container>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
 //#region Pages
@@ -11,13 +11,15 @@ import Select from '../../components/Select';
 //#region Assets
 import warningIcon from '../../assets/images/icons/warning.svg';
 //#endregion
-
+import {useToast} from '../../hooks/ToastContext';
+import {useAuth} from '../../hooks/AuthContext';
 import api from '../../services/api';
-import './styles.css';
+import {Container, Main, Fieldset, Footer} from './styles';
+//import './styles.css';
 
 const TeacherForm: React.FC = () => {
 
-  //#region Functions
+  //#region FUNCTIONS
   const history = useHistory();
 
   const [name, setName] = useState('');
@@ -27,6 +29,9 @@ const TeacherForm: React.FC = () => {
 
   const [subject, setSubject] = useState('');
   const [cost, setCost] = useState('');
+
+  const {addToast} = useToast();
+  const {user} = useAuth();
 
   const [scheduleItens, setScheduleItens] = useState([
     { week_day: 0, from: '', to: ''}
@@ -49,31 +54,61 @@ const TeacherForm: React.FC = () => {
     setScheduleItens(updatedArray);
   }
 
+  const validateFields = useCallback(()=>{
+    if(name !== '' && avatar !== '' && whatsapp !== '' && bio !== ''){
+      if(subject !== '' && cost !== '' && scheduleItens[0].from !== '' && 
+        scheduleItens[0].to !== '' && scheduleItens[0].week_day !== 0)
+          return true;
+      else
+          return false;
+    }
+    else{
+      return false;
+    }
+  },[name, avatar, whatsapp, bio, subject, cost, scheduleItens]);
+
   function handleCreateClass(e: FormEvent){
     e.preventDefault();
-
-    api.post('classes',{
-      name: name,
-      avatar: avatar,
-      whatsapp: whatsapp,
-      bio: bio,
-      subject: subject,
-      cost: Number(cost),
-      schedule: scheduleItens
-    }).then(()=>{
-      history.push('/');
-    }).catch(()=>{
-      alert('Erro no cadastro');
-    })
+    if(validateFields()){
+      api.post('classes',{
+        name: name,
+        avatar: avatar,
+        whatsapp: whatsapp,
+        bio: bio,
+        subject: subject,
+        cost: Number(cost),
+        schedule: scheduleItens
+      }).then(()=>{
+        addToast({
+          id: "Success Message",
+          title: "Success.",
+          description: "Congratulations! Class has been created with success.",
+          type: "success"
+        });
+        history.push('/');
+      }).catch(()=>{
+        addToast({
+          id: "Error Message",
+          title: "Error.",
+          description: "Error creating class. Check the fields and try again.",
+          type: "danger"
+        });
+      })
+    }else{
+      addToast({
+        id: "Error Message",
+        title: "Error.",
+        description: "Error creating class. Check the fields and try again.",
+        type: "danger"
+      });
+    }
   }
+  
   useEffect(()=>{
-    var retrievedObject = localStorage.getItem('proffy-token');
-    if(retrievedObject != null){
-      var userCredentials = JSON.parse(retrievedObject);
-      setName(userCredentials[0].first_name + ' ' + userCredentials[0].last_name);
+    setName(user.first_name + ' ' + user.last_name);
 
       api.post('profile',{
-        fk_login_id: userCredentials[0].id
+        fk_login_id: user.id
       }).then((resp)=> {
         const {data} = resp;
         if (data[0].avatar != null)
@@ -82,28 +117,26 @@ const TeacherForm: React.FC = () => {
         setWhatsapp(data[0].whatsapp);
         if (data[0].bio != null)
           setBio(data[0].bio);
-      });
-    }
-  }
-  ,[]);
+      });  
+  },[user]);
   //#endregion
 
   return (
-    <div id="page-teacher-form" className="container">
+    <Container>
         <PageHeader 
           title="So you want to teach? That's Amazing."
           description="The first step is to fill out this registration form"/>
-        <main>
+        <Main>
           <form onSubmit={handleCreateClass}>
-          <fieldset>
+          <Fieldset>
             <legend>Your Personal Data</legend>
             <Input name="name" label="Name" placeholder="Type your Full Name..." value={name} disabled/>
             <Input name="avatar" label="Avatar" placeholder="Type the url of your Avatar Image..." value={avatar} onChange={(e) => setAvatar(e.target.value)}/>
             <Input name="whatsapp" label="WhatsApp" placeholder="Type the number of your phone to further contact..." value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)}/>
             <Textarea name="bio" label="Biography" value={bio} onChange={(e) => setBio(e.target.value)}/>
-          </fieldset>
+          </Fieldset>
 
-          <fieldset>
+          <Fieldset>
             <legend>About the Class</legend>
             <Select name="subject" label="Subject" 
                     options={[
@@ -118,9 +151,9 @@ const TeacherForm: React.FC = () => {
                       {value: 'Spanish', label: 'Spanish'}
                     ]} value={subject} onChange={(e) => setSubject(e.target.value)}/>
             <Input name="cost" label="Cost" placeholder="Type the cost of your class..." value={cost} onChange={(e) => setCost(e.target.value)}/>           
-          </fieldset>
+          </Fieldset>
 
-          <fieldset>
+          <Fieldset>
               <legend>Available times
                 <button type="button" onClick={addNewScheduledItem}>+ New Time</button>
               </legend>
@@ -143,8 +176,8 @@ const TeacherForm: React.FC = () => {
                   </div>
                 )
               })}
-          </fieldset>
-          <footer>
+          </Fieldset>
+          <Footer>
             <p>
               <img src={warningIcon} alt="Warning Icon"/>
               Important! <br />
@@ -153,10 +186,10 @@ const TeacherForm: React.FC = () => {
             <button type="submit">
               Save Registration
             </button>
-          </footer>
+          </Footer>
           </form>
-        </main>
-    </div>
+        </Main>
+    </Container>
   );
 }
 
